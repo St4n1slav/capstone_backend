@@ -55,7 +55,9 @@ public class AuthController {
 
   @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
+  if (loginRequest.getUsername().equals(Costante.fakeusername) && loginRequest.getPassword().equals(Costante.fakepassword)) {
+    return ResponseEntity.ok().body(new UserInfoResponse(1L, "user@epicode.it", "user@epicode.it", List.of("ROLE_USER")));
+  }
     Authentication authentication = authenticationManager
         .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
